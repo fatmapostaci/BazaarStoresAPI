@@ -1,6 +1,7 @@
+@Stores
 Feature: Stores
 
-  @Stores
+  @CreateAStore
   Scenario: Create A New Store
     Given user gets token
     And user sends POST request to create a store
@@ -9,4 +10,5 @@ Feature: Stores
     @LoginEmail
     Scenario: New
       Given user sends POST request to register
-      And  user gets token
+      And  user gets token as "registeredEmail"
+
