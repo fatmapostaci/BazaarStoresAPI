@@ -19,19 +19,18 @@ public class StoresSD {
     public static Response response;
 
 
+    @And("user sends POST request to create a store")
+    public void userSendsPOSTRequestToCreateAStore() {
 
-
-    @And("user sends POST request")
-    public void userSendsPOSTRequest() {
         json = JsonUtils.readJson("stores\\storesPostBody");
-
-        response =  given(spec).body(json).post("/api/stores/create");
-         response.prettyPrint();
+        response = given(spec).body(json).post("/api/stores/create");
+        response.prettyPrint();
     }
 
     @Then("user verifies status code {int}")
     public void userVerifiesStatusCode(int arg) {
-        Assert.assertEquals(response.statusCode(),arg);
+        Assert.assertEquals(response.statusCode(), arg);
     }
+
 
 }
