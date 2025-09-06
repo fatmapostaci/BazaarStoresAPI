@@ -7,7 +7,11 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"stepdefinitions","base_urls","hooks"},
+ ferhat
         tags = "@GetProducts",
+
+        tags = "@LoginEmail",
+ master
         plugin = {"html:target/reports/html_report.html",
                 "json:target/reports/json_report.json",
                 "rerun:target/failed_tests/failed_scenarios.txt",
