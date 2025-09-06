@@ -1,3 +1,0 @@
-Feature: Products
-
-  Scenario: Products
