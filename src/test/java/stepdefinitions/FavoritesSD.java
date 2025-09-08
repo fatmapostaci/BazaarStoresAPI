@@ -6,6 +6,7 @@ import io.cucumber.java.en.*;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import utilities.ConfigReader;
 import utilities.JsonUtils;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import static base_urls.BazaarStoresBaseUrl.spec;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static utilities.Authentication.getToken;
+import static utilities.JsonUtils.readJson;
 
 public class FavoritesSD {
 
@@ -52,7 +54,8 @@ public class FavoritesSD {
 
         idList = json.getList("id");
         System.out.println("idList = " + idList);
-        favId = idList.getFirst();
+        favId = idList.get(1);
+        System.out.println("favId = " + favId);
     }
 
     @When("With the POST method, the user sends one of the saved IDs as a request")
@@ -120,10 +123,18 @@ public class FavoritesSD {
 
     @Then("delete user")
     public void delete_user() {
-
-        response = given(spec).when().post("/api/logout");
-        getToken("customer@outlook.com");
-        response = given(spec).when().post("/api/users/"+idList.getFirst());
+//
+//        response = given(spec).when().post("/api/logout");
+//
+//        getToken(ConfigReader.getProperty("email"));
+//        response.prettyPrint();
+//
+//        int id =Integer.parseInt(ConfigReader.getProperty("registerId"));
+//        System.out.println("id = " + id);
+//
+//        response = given(spec).when().delete("/api/users/"+id);
+//
+//        response.then().assertThat().body("success", equalTo("User deleted successfully!"));
 
 
 

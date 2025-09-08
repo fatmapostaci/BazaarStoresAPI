@@ -12,7 +12,7 @@ Feature: Favorites
     Then The user verifies that the Content-Type is json
     And delete user
 
-    @PostFav @CRUDFav
+  @PostFav @CRUDFav
   Scenario: Create a favorite product
     Given The user saves the IDs received from AllProducts
     When With the POST method, the user sends one of the saved IDs as a request
