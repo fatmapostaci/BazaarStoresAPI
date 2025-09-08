@@ -20,6 +20,7 @@ public class BazaarStoresBaseUrl {
        spec = new RequestSpecBuilder()
                .setBaseUri(ConfigReader.getProperty("base_url"))
                .setContentType(ContentType.JSON)
+               .setAccept(ContentType.JSON)
                .build();
 
  }

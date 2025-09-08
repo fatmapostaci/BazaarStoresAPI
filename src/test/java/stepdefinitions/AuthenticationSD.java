@@ -24,7 +24,7 @@ public class AuthenticationSD {
     }
     @Given("user gets token as {string}")
     public void userGetsTokenAs(String email) {
-        getToken(ConfigReader.getProperty(email));
+        getToken(ConfigReader.getProperty("email"));
     }
 
     @And("user sends POST request to register")

@@ -1,0 +1,11 @@
+{
+  "name": "Samsung",
+  "price": 9.99,
+  "stock": 100,
+  "sku": "SKU100",
+  "category_id": 1,
+  "manufacturer": "Tecnologia",
+  "image_url": "images/image123.jpg",
+  "discount": 0.5,
+  "description": "Bueno,Bonito,Barato"
+}
