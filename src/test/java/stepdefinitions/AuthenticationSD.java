@@ -24,7 +24,7 @@ public class AuthenticationSD {
     }
     @Given("user gets token as {string}")
     public void userGetsTokenAs(String email) {
-        getToken(ConfigReader.getProperty("email"));
+        getToken(ConfigReader.getProperty(email));
     }
 
     @And("user sends POST request to register")
@@ -35,12 +35,15 @@ public class AuthenticationSD {
         response = given(spec)
                     .body(json)
                     .post("/api/register");
+
         response.prettyPrint();
 
         JsonPath jsonPath = response.jsonPath();
         ConfigReader.setProperty( "registeredEmail", jsonPath.get("user.email") );  //değer confite saklanır
+        ConfigReader.setProperty( "registerId", jsonPath.get("user.id")+"");
 
         System.out.println(ConfigReader.getProperty("registeredEmail"));
+        System.out.println("Register ID = "+ConfigReader.getProperty("registerId"));
 
     }
 
