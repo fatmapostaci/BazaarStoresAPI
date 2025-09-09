@@ -9,10 +9,11 @@ import static utilities.JsonUtils.readJson;
 
 public class Authentication {
 
+    public static Response response;
     public  static JsonNode json;
     public static void getToken() {
 
-        Response response = given(spec)
+        response = given(spec)
                 .body(readJson("authentication\\credentials"))
                 .post("/api/login");
         response.prettyPrint();
