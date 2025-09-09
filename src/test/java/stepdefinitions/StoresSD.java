@@ -6,7 +6,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.hamcrest.Matchers;
 import org.testng.Assert;
+import utilities.ConfigReader;
 import utilities.JsonUtils;
 
 import static base_urls.BazaarStoresBaseUrl.spec;
@@ -25,11 +27,50 @@ public class StoresSD {
         json = JsonUtils.readJson("stores\\storesPostBody");
         response = given(spec).body(json).post("/api/stores/create");
         response.prettyPrint();
+
+    }
+    @And("user keeps created id")
+    public void userKeepsCreatedId() {
+        ConfigReader.setProperty( "validStoreId", response.jsonPath().getString("product.id") );
+        System.out.println("userKeepsCreatedId=" + ConfigReader.getProperty("validStoreId"));
+
     }
 
     @Then("user verifies status code {int}")
-    public void userVerifiesStatusCode(int arg) {
-        Assert.assertEquals(response.statusCode(), arg);
+    public void userVerifiesStatusCode(int expectedStatusCode) {
+        Assert.assertEquals(response.statusCode(), expectedStatusCode);
+    }
+
+
+    @Given("user sends get request with store id as {string}")
+    public void userSendsGetRequestWithStoreIdAs(String id) {
+
+        System.out.println("userSendsGetRequestWithStoreIdAs = " + ConfigReader.getProperty(id));
+
+        response = given(spec).get("/api/stores/" + ConfigReader.getProperty(id));
+        response.prettyPrint();
+    }
+
+    @And("user verifies response has tag as {string}")
+    public void userVerifiesResponseHasTagAs(String tagName) {
+        response
+                .then()
+                .body("$", Matchers.hasKey(tagName));
+    }
+
+    @And("user verifies response contains {string}")
+    public void userVerifiesResponseContains(String expectedText) {
+        response
+                .then()
+                .body(Matchers.containsString(expectedText));
+    }
+
+
+    @And("user verifies that response id matches with {string}")
+    public void userVerifiesThatResponseIdMatchesWith(String storeId) {
+        response
+                .then()
+                .body("id", Matchers.equalTo(  Integer.parseInt(( ConfigReader.getProperty(storeId))) ) );
     }
 
 
