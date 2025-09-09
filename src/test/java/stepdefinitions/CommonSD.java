@@ -1,7 +1,11 @@
 package stepdefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
+import utilities.ConfigReader;
+
 import static org.hamcrest.Matchers.equalTo;
 import static utilities.Authentication.response;
 
@@ -30,6 +34,28 @@ public class CommonSD {
                 .then()
                 .assertThat()
                 .body(key, equalTo(value));
+    }
+
+    @And("user verifies response has tag as {string}")
+    public void userVerifiesResponseHasTagAs(String tagName) {
+        response
+                .then()
+                .body("$", Matchers.hasKey(tagName));
+    }
+
+    @And("user verifies response contains {string}")
+    public void userVerifiesResponseContains(String expectedText) {
+        response
+                .then()
+                .body(Matchers.containsString(expectedText));
+    }
+
+
+    @And("user verifies that response id matches with {string}")
+    public void userVerifiesThatResponseIdMatchesWith(String storeId) {
+        response
+                .then()
+                .body("id", Matchers.equalTo(  Integer.parseInt(( ConfigReader.getProperty(storeId))) ) );
     }
 
 }
