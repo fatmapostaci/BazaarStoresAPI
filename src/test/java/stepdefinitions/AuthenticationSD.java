@@ -3,6 +3,7 @@ package stepdefinitions;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import utilities.ConfigReader;
@@ -27,8 +28,8 @@ public class AuthenticationSD {
         getToken(ConfigReader.getProperty(email));
     }
 
-    @And("user sends POST request to register")
-    public void userSendsPOSTRequestToRegister() {
+    @And("user sends valid POST request to register")
+    public void userSendsValidPOSTRequestToRegister() {
 
         json = JsonUtils.readJson("authentication\\register");
         JsonUtils.setJson(json,"email", ("user"+ (int)(Math.random()*1000)+"@gmail.com") );  //email update edilir.
@@ -47,7 +48,62 @@ public class AuthenticationSD {
 
     }
 
+    @When("user sends invalid POST request to register")
+    public void userSendsInvalidPOSTRequestToRegister() {
+        json = JsonUtils.readJson("authentication\\register");
+        JsonUtils.setJson(json,"email", "invaliduseremail" );  //email update edilir.
+        response = given(spec)
+                .body(json)
+                .post("/api/register");
+
+        response.prettyPrint();
+
+    }
+
+    @Given("user logs in successfully")
+    public void userLogsInSuccessfully() {
+        json = JsonUtils.readJson("authentication\\credentials");
+        JsonUtils.setJson(json,"email",ConfigReader.getProperty("registeredEmail"));
+
+        response = given(spec).body(json).post("/api/login");
+        response.prettyPrint();
+
+    }
+    @When("user logs in with invalid credentials")
+    public void userLogsInWithInvalidCredentials() {
+
+        json = JsonUtils.readJson("authentication\\credentials");
+        JsonUtils.setJson(json,"email",ConfigReader.getProperty("registeredEmail"));
+        JsonUtils.setJson(json,"password","wrongpassword");
+
+        response = given(spec).body(json).post("/api/login");
+        response.prettyPrint();
+    }
+
+    @When("user logs in incorrectly")
+    public void userLogsInIncorrectly() {
+        json = JsonUtils.readJson("authentication\\credentials");
+        JsonUtils.setJson(json,"email",ConfigReader.getProperty("registeredEmail"));
+        JsonUtils.setJson(json,"password","wrongpassword");
+
+        response = given(spec).body(json).post("/api/login");
+        response.prettyPrint();
+    }
+
     @Given("user logs out")
     public void userLogsOut() {
+
+        response = given(spec).post("/api/logout/");
+        response.prettyPrint();
     }
+
+
+    @Given("user sends GET request to get current authenticated user")
+    public void userSendsGETRequestToGetCurrentAuthenticatedUser() {
+        response = given(spec).get("/api/me");
+        response.prettyPrint();
+    }
+
+
+
 }

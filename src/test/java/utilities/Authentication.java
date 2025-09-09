@@ -18,19 +18,17 @@ public class Authentication {
                 .post("/api/login");
         response.prettyPrint();
         spec.header("Authorization", "Bearer " + response.jsonPath().getString("authorisation.token"));
-        // spec.header("Authorization", "Bearer " + response.jsonPath().getString("_id"));
 
     }
     public static void getToken(String email) {
 
         json = JsonUtils.readJson("authentication\\credentials");
         JsonUtils.setJson(json,"email",email);
-        Response response = given(spec)
+        response = given(spec)
                 .body(json)
                 .post("/api/login");
         response.prettyPrint();
         spec.header("Authorization", "Bearer " + response.jsonPath().getString("authorisation.token"));
-        // spec.header("Authorization", "Bearer " + response.jsonPath().getString("_id"));
 
     }
 
