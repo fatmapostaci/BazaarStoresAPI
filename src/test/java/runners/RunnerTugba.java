@@ -13,6 +13,6 @@ import io.cucumber.testng.CucumberOptions;
                 "rerun:target/failed_tests/failed_scenarios.txt",
                 "pretty"}
 )
-public class RunnerTugba extends AbstractTestNGCucumberTests {
+public class RunnerTugba extends AbstractTestNGCucumberTests { //
 
 }
