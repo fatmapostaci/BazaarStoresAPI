@@ -34,6 +34,7 @@ public class FavoritesSD {
     public void the_user_saves_the_i_ds_received_from_all_products() {
 
         response = given(spec).when().get("/api/products");
+        response.prettyPrint();
         JsonPath json = response.jsonPath();
 
         idList = json.getList("id");
@@ -111,6 +112,14 @@ public class FavoritesSD {
         response.then().assertThat().body("success", equalTo("User deleted successfully!"));
 
     }
+
+    @Then("logout")
+    public void logout() {
+
+        response = given(spec).when().post("/api/logout");
+
+    }
+
 
 
 
