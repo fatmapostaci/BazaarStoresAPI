@@ -3,9 +3,7 @@ package stepdefinitions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.cucumber.java.en.*;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
 import utilities.ConfigReader;
 import utilities.JsonUtils;
 import java.util.List;
@@ -14,11 +12,11 @@ import static base_urls.BazaarStoresBaseUrl.spec;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static utilities.Authentication.getToken;
-import static utilities.JsonUtils.readJson;
+import static utilities.Authentication.response;
 
 public class FavoritesSD {
 
-    Response response;
+
     JsonNode json;
     int favId;
     int secondId;
@@ -31,20 +29,6 @@ public class FavoritesSD {
         response.prettyPrint(); //Ilk get'te response bos dönmeli
     }
 
-    @Then("The user verifies that the status code is {int}")
-    public void the_user_verifies_that_the_status_code_is(int statusCode) {
-        response
-                .then()
-                .assertThat()
-                .statusCode(statusCode);
-    }
-    @Then("The user verifies that the Content-Type is json")
-    public void the_user_verifies_that_the_content_type_is_json() {
-        response
-                .then()
-                .assertThat()
-                .contentType(ContentType.JSON);
-    }
 
     @Given("The user saves the IDs received from AllProducts")
     public void the_user_saves_the_i_ds_received_from_all_products() {
@@ -69,15 +53,6 @@ public class FavoritesSD {
 
     }
 
-    @Then("The user verifies that the {string} information in the response body is {string}")
-    public void the_user_verifies_that_the_information_in_the_response_body_is(String key, String value) {
-        response
-                .then()
-                .assertThat()
-                .body(key, equalTo(value));
-    }
-
-
     @Then("The user verifies that the response body contains the ID of the product added with the POST method.")
     public void the_user_verifies_that_the_response_body_contains_the_id_of_the_product_added_with_the_post_method() {
         response
@@ -90,7 +65,7 @@ public class FavoritesSD {
     public void the_user_adds_the_id_previously_saved_as_a_variable_from_the_get_all_products_method_to_the_endpoint_using_the_delete_method() {
         System.out.println("fawId = " + favId); //210
         response = given(spec).when().delete("/api/favorites/"+ favId);
-       response.prettyPrint();
+        response.prettyPrint();
     }
 
     @Then("The user verifies that the response body does not contain the ID of the product deleted using the DELETE method.")
@@ -115,28 +90,25 @@ public class FavoritesSD {
 
     @Then("The user verifies that the response body contains the IDs of both products added with the POST method")
     public void the_user_verifies_that_the_response_body_contains_the_i_ds_of_both_products_added_with_the_post_method() {
-       // response
-              //  .then()
-              //  .body("$",hasItems(fawId,secondId));
+//        response
+//                .then()
+//                .body("$",hasItems(fawId,secondId));
 
     }
 
     @Then("delete user")
     public void delete_user() {
-//
-//        response = given(spec).when().post("/api/logout");
-//
-//        getToken(ConfigReader.getProperty("email"));
-//        response.prettyPrint();
-//
-//        int id =Integer.parseInt(ConfigReader.getProperty("registerId"));
-//        System.out.println("id = " + id);
-//
-//        response = given(spec).when().delete("/api/users/"+id);
-//
-//        response.then().assertThat().body("success", equalTo("User deleted successfully!"));
 
+        response = given(spec).when().post("/api/logout");
+        response.prettyPrint();
+        getToken(ConfigReader.getProperty("email"));
 
+        int id =Integer.parseInt(ConfigReader.getProperty("registerId"));
+        System.out.println("id = " + id);
+
+        response = given(spec).when().delete("/api/users/"+id);
+
+        response.then().assertThat().body("success", equalTo("User deleted successfully!"));
 
     }
 
