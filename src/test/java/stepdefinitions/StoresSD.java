@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
@@ -14,11 +15,11 @@ import utilities.JsonUtils;
 import static base_urls.BazaarStoresBaseUrl.spec;
 import static io.restassured.RestAssured.given;
 import static utilities.Authentication.getToken;
+import static utilities.Authentication.response;
 
 public class StoresSD {
 
     public static JsonNode json;
-    public static Response response;
 
 
     @And("user sends POST request to create a store")
@@ -41,6 +42,11 @@ public class StoresSD {
         Assert.assertEquals(response.statusCode(), expectedStatusCode);
     }
 
+    @When("user sends GET request to get all stores and keep ids")
+    public void userSendsGETRequestToGetAllStoresAndKeepIds() {
+        response = given(spec).get("/api/stores/");
+       // response.jsonPath().getList("id");
+    }
 
     @Given("user sends get request with store id as {string}")
     public void userSendsGetRequestWithStoreIdAs(String id) {
@@ -72,6 +78,7 @@ public class StoresSD {
                 .then()
                 .body("id", Matchers.equalTo(  Integer.parseInt(( ConfigReader.getProperty(storeId))) ) );
     }
+
 
 
 }
