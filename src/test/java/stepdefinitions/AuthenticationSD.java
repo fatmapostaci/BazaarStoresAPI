@@ -47,5 +47,7 @@ public class AuthenticationSD {
 
     }
 
-
+    @Given("user logs out")
+    public void userLogsOut() {
+    }
 }
