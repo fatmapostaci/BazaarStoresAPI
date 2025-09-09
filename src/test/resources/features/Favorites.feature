@@ -10,7 +10,6 @@ Feature: Favorites
     Given The user sends a request with the GET method
     Then The user verifies that the status code is 200
     Then The user verifies that the Content-Type is json
-    And delete user
 
   @PostFav @CRUDFav
   Scenario: Create a favorite product
@@ -19,6 +18,7 @@ Feature: Favorites
     Then The user verifies that the status code is 200
     Then The user verifies that the Content-Type is json
     Then The user verifies that the "success" information in the response body is "Product added favorites successfully!"
+    And logout
 
 
   @secondGetFav @CRUDFav
@@ -28,6 +28,7 @@ Feature: Favorites
     And The user sends a request with the GET method
     Then The user verifies that the status code is 200
     Then The user verifies that the response body contains the ID of the product added with the POST method.
+    And logout
 
   @deleteFav @CRUDFav
   Scenario: Delete favorite product with ID
@@ -37,6 +38,7 @@ Feature: Favorites
     Then The user verifies that the status code is 200
     Then The user verifies that the Content-Type is json
     Then The user verifies that the "success" information in the response body is "Favorite product deleted successfully!"
+    And logout
 
   @thirdGetFav @CRUDFav
   Scenario: List of deleted favorite products
@@ -46,6 +48,7 @@ Feature: Favorites
     And The user sends a request with the GET method
     Then The user verifies that the status code is 200
     Then The user verifies that the response body does not contain the ID of the product deleted using the DELETE method.
+    And logout
 
   @multiplePostFav @CRUDFav
   Scenario: Adding multiple products to favorites and listing of favorite products
@@ -56,5 +59,6 @@ Feature: Favorites
     Then The user verifies that the status code is 200
     Then The user verifies that the response body contains the IDs of both products added with the POST method
     Then The user verifies that the Content-Type is json
+    And logout
 
 
