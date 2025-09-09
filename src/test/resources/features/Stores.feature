@@ -1,13 +1,6 @@
 @Stores
 Feature: Stores
 
-  Background: Get Token
-    Given user gets token
-
-  @GetAllStores
-  Scenario: Get All Stores
-    When user sends GET request to get all stores
-    Then user verifies status code 200
 
   @CreateAStore @GetAStoreById_Succesfull
   Scenario: Create A New Store
@@ -23,11 +16,11 @@ Feature: Stores
     And user verifies response has tag as "name"
     And user verifies that response id matches with "validStoreId"
 
-    @GetAStoreById_StoreNotFound
-    Scenario: Get Store Request With Invalid Store Id
-      When user sends get request with store id as "invalidStoreId"
-      Then user verifies status code 404
-      And user verifies response contains "Store not found"
+  @GetAStoreById_StoreNotFound
+  Scenario: Get Store Request With Invalid Store Id
+    When user sends get request with store id as "invalidStoreId"
+    Then user verifies status code 404
+    And user verifies response contains "Store not found"
 
 
   @UpdateAStoreByID_Succesfull
@@ -35,3 +28,15 @@ Feature: Stores
     Given user sends get request with store id as "0"
     Then user verifies status code 404
     And user verifies response contains "Store not found"
+
+  @GetAllStores
+  Scenario: Get All Stores
+    When user sends GET request to get all stores and keep ids
+    Then user verifies status code 200
+
+  @Logout
+  Scenario: Logout
+    Given user gets token
+    Given user logs out
+    Then user verifies status code 200
+
