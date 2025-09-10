@@ -1,3 +1,4 @@
+@MyCRUD
 Feature: Favorites
 
   @FirstGetFav @CRUDFav
