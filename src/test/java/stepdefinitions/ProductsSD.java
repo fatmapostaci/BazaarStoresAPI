@@ -4,35 +4,40 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import  io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import utilities.JsonUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 import static base_urls.BazaarStoresBaseUrl.spec;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
-import static utilities.Authentication.getToken;
+import static utilities.Authentication.response;
+
 
 public class ProductsSD {
-    public static Response response;
 
+    List<Integer> idList;
 
     @Then("user sends get request to get products info")
     public void user_sends_get_request_to_get_products_info() {
 
-       // response =  given(spec).body(json).get("/api/products");;
         response=given(spec).get("/api/products");
-
         response.prettyPrint();
-    }
-    @Then("user validates status code")
-    public void user_validates_status_code() {
+
         int size=response.jsonPath().getList("Products").size();
-       response.then().statusCode(200);
-       //assertEquals(18, size);
+        System.out.println("size = " + size);
+        JsonPath json = response.jsonPath();
+        idList = json.getList("id");
+
+        System.out.println("idList = " + idList);
+
+
+       assertEquals(idList.size(), size);
     }
 //-------------------------**POST**---------------------------------
     public static String createdId;
@@ -59,15 +64,28 @@ public class ProductsSD {
                         ,"product.sku",equalTo(json.get("sku").asText()));
         response.prettyPrint();
 
-    }
-
-    @Then("user validates new created product status code")
-    public void user_validates_new_created_product_status_code() {
-        response.then().statusCode(201);
-        //     spec.header("Authorization", "Created_Id " + response.jsonPath().getString("id"));
+           //     spec.header("Authorization", "Created_Id " + response.jsonPath().getString("id"));
         createdId = response.jsonPath().getString("product.id");
         System.out.println("Created product_id: " + createdId);
 }
+//-----------------------**GETID**-----------------------------------
+    @When("user sends get request to new create product with id")
+    public void user_sends_get_request_to_new_create_product_with_id() {
+        response= given(spec).body(json).get("/api/products/"+createdId);
+    }
+
+    @Then("user validates new created product with id")
+    public void user_validates_new_created_product_with_id() {
+        String responseId = response.jsonPath().getString("id");
+        System.out.println("responseId = " + responseId);
+        response.then().body(
+                "id", equalTo(Integer.parseInt(createdId)),
+                "description", equalTo(json.get("description").asText()),
+                "name", equalTo(json.get("name").asText()));
+    }
+
+
+
 //-----------------------**PUT**-----------------------------------
 @Given("user sets the payload for new product body update")
 public void user_sets_the_payload_for_new_product_body_update() throws IOException {
@@ -91,10 +109,7 @@ public void user_sets_the_payload_for_new_product_body_update() throws IOExcepti
         assertTrue(response.asString().contains("Product updated successfully!"));
     }
 
-    @Then("user validates new created product update status code")
-    public void user_validates_new_created_product_update_status_code() {
-        response.then().statusCode(200);
-    }
+
 //----------------------------**DELETE**-----------------------------
 
     @When("user sends delete request for the product")
@@ -105,8 +120,5 @@ public void user_sets_the_payload_for_new_product_body_update() throws IOExcepti
     public void user_validates_product_deletion() {
         assertTrue(response.asString().contains("Product deleted successfully!"));
     }
-    @Then("user validates status code is {int}")
-    public void user_validates_status_code_is(Integer int1) {
-response.then().statusCode(200);
-    }
+
     }
