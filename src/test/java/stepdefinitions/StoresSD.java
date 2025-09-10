@@ -57,27 +57,7 @@ public class StoresSD {
         response.prettyPrint();
     }
 
-    @And("user verifies response has tag as {string}")
-    public void userVerifiesResponseHasTagAs(String tagName) {
-        response
-                .then()
-                .body("$", Matchers.hasKey(tagName));
-    }
 
-    @And("user verifies response contains {string}")
-    public void userVerifiesResponseContains(String expectedText) {
-        response
-                .then()
-                .body(Matchers.containsString(expectedText));
-    }
-
-
-    @And("user verifies that response id matches with {string}")
-    public void userVerifiesThatResponseIdMatchesWith(String storeId) {
-        response
-                .then()
-                .body("id", Matchers.equalTo(  Integer.parseInt(( ConfigReader.getProperty(storeId))) ) );
-    }
 
 
 
