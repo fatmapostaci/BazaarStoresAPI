@@ -11,7 +11,7 @@ Feature: Favorites
   @PostFav @CRUDFav
   Scenario: Create a favorite product
     Given The user saves the IDs received from AllProducts
-    When The user sends a POST request with one of the saved IDs
+    Given With the POST method, the user sends one of the saved IDs as a request
     Then The user verifies that the status code is 200
     Then The user verifies that the Content-Type is json
     Then The user verifies that the "success" information in the response body is "Product added favorites successfully!"
@@ -38,7 +38,7 @@ Feature: Favorites
 
   @multiplePostFav @CRUDFav
   Scenario: Adding multiple products to favorites and listing of favorite products
-    Given The user sends a POST request with one of the saved IDs
+    Given With the POST method, the user sends one of the saved IDs as a request
     When The user sends a POST request with one of the saved IDs again
     Then The user verifies that the "success" information in the response body is "Product added favorites successfully!"
     And The user sends a request with the GET method
@@ -61,7 +61,7 @@ Feature: Favorites
 
   @PostFavWithSameProducts @CRUDFav
   Scenario: Adding a product to favorites that is already in favorites NEGATIVE
-    Given The user sends a POST request with one of the saved IDs
+    Given With the POST method, the user sends one of the saved IDs as a request
     Then The user verifies that the "error" information in the response body is "Product is already in favorites."
     Then The user verifies that the status code is not 200
 

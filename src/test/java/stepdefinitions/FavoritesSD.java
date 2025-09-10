@@ -33,8 +33,8 @@ public class FavoritesSD {
         ConfigReader.setProperty("favId", String.valueOf(idList.get(1)));
     }
 
-    @Given("The user sends a POST request with one of the saved IDs")
-    public void the_user_sends_a_post_request_with_one_of_the_saved_i_ds() {
+    @Given("With the POST method, the user sends one of the saved IDs as a request")
+    public void with_the_post_method_the_user_sends_one_of_the_saved_i_ds_as_a_request() {
         json = readJson("favorites\\favoritesPost"); //request body'mizi json'a ceviriyoruz
         ((ObjectNode) json).put("product_id", ConfigReader.getProperty("favId")); //Json dosyamizdaki id degerini degistiriyoruz.
         System.out.println("favId = " + ConfigReader.getProperty("favId"));
@@ -42,7 +42,6 @@ public class FavoritesSD {
                 .body(json)
                 .post("/api/favorites/create");
         response.prettyPrint();
-
     }
 
     @Then("The user verifies that the response body contains the ID of the product added with the POST method.")
