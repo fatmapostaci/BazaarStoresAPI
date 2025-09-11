@@ -38,23 +38,18 @@ Covers core Bazaar modules:
 
 
 📂 Project Structure
-src/test/java
-
-├── base_urls/                # Base URL setup for environments
-
-├── json_files/               # Request/response JSON payloads
-
-├── runners/                  # Runner classes for Cucumber/TestNG
-
-├── stepdefinitions/          # Step Definitions (Given/When/Then in Java)
-
-└── utilities/                # Utility classes (helpers, config, etc.)
-
-src/test/resources
-
-├── features/                 # Gherkin feature files
-
-└── cucumber.properties       # Cucumber config
+📂 src
+ └── test
+     ├── java
+     │   ├── base_urls/          # Base URL setup for environments
+     │   ├── json_files/         # Request/response JSON payloads
+     │   ├── runners/            # Runner classes for Cucumber/TestNG
+     │   ├── stepdefinitions/    # Step Definitions (Given/When/Then in Java)
+     │   └── utilities/          # Utility classes (helpers, config, etc.)
+     │
+     └── resources
+         ├── features/           # Gherkin feature files
+         └── cucumber.properties # Cucumber config
 
 
 ⚙️ Setup & Installation
