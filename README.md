@@ -4,7 +4,6 @@ A BDD-style REST API test automation framework for the Bazaar Stores API.
 This project validates key business flows such as authentication, store management, user management, products, favorites, and customer carts.
 
 📌 Features
-
 BDD (Behavior Driven Development) with Cucumber and Gherkin feature files
 Step Definitions in Java linking feature steps to automation logic
 Reusable JSON files for request payloads and expected responses
