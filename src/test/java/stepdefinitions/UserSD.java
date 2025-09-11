@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static base_urls.BazaarStoresBaseUrl.spec;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static utilities.Authentication.response;
@@ -37,7 +36,8 @@ public class UserSD {
     public void loginWithEmailAndPassword(String email, String password) {
         String body = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
         response =
-                given(spec)
+                given()
+                        .baseUri(ConfigReader.getProperty("base_url"))
                         .contentType(ContentType.JSON)
                         .body(body)
                         .when()
@@ -183,15 +183,15 @@ public class UserSD {
                              Map<String, Object> queryParams,
                              Map<String, Object> body,
                              Map<String, Object> pathParams) {
-        var spec2 = given(spec).log().all().basePath(API_BASE_PATH);
+        var spec2 = given()
+                .baseUri(ConfigReader.getProperty("base_url"))
+                .basePath(API_BASE_PATH)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON);
 
         if (activeToken != null && !activeToken.isBlank()) {
             spec2.header("Authorization", "Bearer " + activeToken);
         }
-
-//        if (method.equalsIgnoreCase("PUT")) {
-//            body.put("email", context.get("createdUserEmail"));
-//        }
 
         if (queryParams != null && !queryParams.isEmpty()) spec2.queryParams(queryParams);
         if (pathParams != null && !pathParams.isEmpty()) spec2.pathParams(pathParams);
