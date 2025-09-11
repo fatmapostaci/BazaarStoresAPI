@@ -47,16 +47,15 @@ Feature: Stores
 
   @PUT
   Scenario: Update Store  Returns Response As Validation Errors
-    Given user updates "admin_id" key with value as "000" of put json file
-    And user renames "admin_d" key as "new_key" of put json file
+    Given user deletes "admin_d" key from put json file
     When user sends put request with store id as "validStoreId"
     Then user verifies status code 422
     And The user verifies that the Content-Type is json
 
   @PUT
   Scenario: Update Store Returns Response As Update Failed
-    Given user deletes "admin_id" key from put json file
-    And user deletes "admin_d" key from put json file
+    Given user updates "admin_d" key with value as "0" of put json file
+    And user renames "admin_id" key as "new_key" of put json file
     Given user sends put request with store id as "validStoreId"
     Then user verifies status code 500
     And user verifies response contains "Store update failed. Please try again"
@@ -68,8 +67,3 @@ Feature: Stores
     Then user verifies status code 200
     And user verifies response contains "Store deleted successfully!"
     And The user verifies that the Content-Type is json
-
-
-
-
-

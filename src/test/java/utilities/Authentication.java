@@ -16,7 +16,6 @@ public class Authentication {
         response = given(spec)
                 .body(readJson("authentication\\credentials"))
                 .post("/api/login");
-        response.prettyPrint();
         spec.header("Authorization", "Bearer " + response.jsonPath().getString("authorisation.token"));
 
     }
@@ -27,7 +26,6 @@ public class Authentication {
         response = given(spec)
                 .body(json)
                 .post("/api/login");
-        response.prettyPrint();
         spec.header("Authorization", "Bearer " + response.jsonPath().getString("authorisation.token"));
 
     }
