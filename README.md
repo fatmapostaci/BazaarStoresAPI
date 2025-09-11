@@ -9,8 +9,8 @@ BDD (Behavior Driven Development) with Cucumber and Gherkin feature files
 Step Definitions in Java linking feature steps to automation logic
 Reusable JSON files for request payloads and expected responses
 Multiple Runners for failed or team-based execution (RunnerFatma, FailedRunner, etc.)
-Base URLs managed separately for flexibility across environments
-Allure Reporting for rich, interactive test results
+Base URL managed separately for flexibility across environments
+Cucumber Reporting for rich, interactive test results
 
 Covers core Bazaar modules:
 Authentication
