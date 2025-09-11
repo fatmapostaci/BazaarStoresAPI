@@ -1,6 +1,7 @@
 BazaarStoresAPI
 
 A BDD-style REST API test automation framework for the Bazaar Stores API.
+
 This project validates key business flows such as authentication, store management, user management, products, favorites, and customer carts.
 
 📌 Features
