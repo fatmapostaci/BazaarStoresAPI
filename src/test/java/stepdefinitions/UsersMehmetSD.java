@@ -1,12 +1,8 @@
 package stepdefinitions;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
-import io.restassured.response.Response;
-import org.apache.commons.lang3.RandomStringUtils;
-import utilities.ConfigReader;
 import utilities.JsonUtils;
 
 import java.io.IOException;
@@ -16,7 +12,7 @@ import static io.restassured.RestAssured.given;
 import static utilities.Authentication.json;
 import static utilities.Authentication.response;
 
-public class UsersSD {
+public class UsersMehmetSD {
     private static int userId;
 
 
