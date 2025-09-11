@@ -1,0 +1,6 @@
+{
+  "name": "John Doe",
+  "email": "dynamicEmail@example.com",
+  "password": "dynamicPassword",
+  "password_confirmation": "dynamicPassword"
+}
