@@ -58,7 +58,9 @@ public class StoresSD {
     }
 
 
+    @Given("user sends put request with store id as {string}")
+    public void userSendsPutRequestWithStoreIdAs(String id) {
 
 
-
+    }
 }

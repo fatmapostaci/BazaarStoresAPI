@@ -13,7 +13,7 @@ import static base_urls.BazaarStoresBaseUrl.spec;
 import static io.restassured.RestAssured.given;
 import static utilities.Authentication.getToken;
 
-public class AuthenticationSD {
+public class AuthenticationFatmaSD {
 
     public static JsonNode json;
     public static Response response;
@@ -82,11 +82,12 @@ public class AuthenticationSD {
 
     @When("user logs in incorrectly")
     public void userLogsInIncorrectly() {
-        json = JsonUtils.readJson("authentication\\credentials");
-        JsonUtils.setJson(json,"email",ConfigReader.getProperty("registeredEmail"));
-        JsonUtils.setJson(json,"password","wrongpassword");
+        json = JsonUtils.readJson("authentication\\error");
+        JsonUtils.setJson(json,"email","");
+        JsonUtils.setJson(json,"password","");
 
         response = given(spec).body(json).post("/api/login");
+
         response.prettyPrint();
     }
 
