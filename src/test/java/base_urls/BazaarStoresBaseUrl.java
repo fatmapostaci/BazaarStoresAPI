@@ -21,6 +21,7 @@ public class BazaarStoresBaseUrl {
        spec = new RequestSpecBuilder()
                .setBaseUri(ConfigReader.getProperty("base_url"))
                .setContentType(ContentType.JSON)
+               .addHeader("Content-Type", "application/json")
                .setAccept(ContentType.JSON)
                .build();
 

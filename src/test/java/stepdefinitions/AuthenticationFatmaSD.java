@@ -94,14 +94,15 @@ public class AuthenticationFatmaSD {
     @Given("user logs out")
     public void userLogsOut() {
 
+
         response = given(spec).post("/api/logout/");
         response.prettyPrint();
     }
 
-
     @Given("user sends GET request to get current authenticated user")
     public void userSendsGETRequestToGetCurrentAuthenticatedUser() {
         response = given(spec).get("/api/me");
+        System.out.println("to get current authenticated user");
         response.prettyPrint();
     }
 
