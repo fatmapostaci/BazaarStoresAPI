@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class JsonUtils {
 
-    public static JsonNode readJson(String fileName){
+    public static JsonNode readJson(String fileName) {
         try {
-            return new ObjectMapper().readTree(new File( System.getProperty("user.dir") + "\\src\\test\\java\\json_files\\"  +fileName + ".json"));
+            return new ObjectMapper().readTree(new File(System.getProperty("user.dir") + "\\src\\test\\java\\json_files\\" + fileName + ".json"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -22,9 +22,29 @@ public class JsonUtils {
 
     public static void setJson(JsonNode json, String key, String value) {
         ((ObjectNode) json).put(key, value);
-        ;
 
     }
 
+    public static void setJsonRenameKey(JsonNode json, String oldKey, String newKey) {
+        if (json.isObject()) {
+            ObjectNode obj = (ObjectNode) json;
+            JsonNode value = obj.get(oldKey);
 
+            if (value != null) {
+                obj.remove(oldKey);
+                obj.set(newKey, value);
+            }
+        } else {
+            throw new IllegalArgumentException("Provided JsonNode is not an ObjectNode");
+        }
+    }
+
+    public static void setJsonDeleteKey(JsonNode json, String key) {
+        if (json.isObject()) {
+            ObjectNode obj = (ObjectNode) json;
+            obj.remove(key);
+        } else {
+            throw new IllegalArgumentException("Provided JsonNode is not an ObjectNode");
+        }
+    }
 }

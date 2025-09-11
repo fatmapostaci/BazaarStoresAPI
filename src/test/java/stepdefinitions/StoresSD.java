@@ -61,6 +61,34 @@ public class StoresSD {
     @Given("user sends put request with store id as {string}")
     public void userSendsPutRequestWithStoreIdAs(String id) {
 
+        json = JsonUtils.readJson("stores\\storesPUTBody");
+        response = given(spec).body(json).put("/api/stores/"+ConfigReader.getProperty(id));
+        response.prettyPrint();
 
+    }
+
+
+    @Given("user sends delete request with store id as {string}")
+    public void userSendsDeleteRequestWithStoreIdAs(String id) {
+        response = given(spec).body(json).delete("/api/stores/"+ConfigReader.getProperty(id));
+        response.prettyPrint();
+    }
+
+    @Given("user deletes {string} key from put json file")
+    public void userDeletesAKeyFromPutJsonFile(String key) {
+
+        JsonUtils.setJsonDeleteKey(json, key);
+        System.out.println("json.asText() = " + json.toString());
+    }
+
+    @Given("user updates {string} key with value as {string} of put json file")
+    public void userUpdatesKeyWithValueAsOfPutJsonFile(String key,String value) {
+
+        JsonUtils.setJson(json,key,value);
+    }
+
+    @And("user renames {string} key as {string} of put json file")
+    public void userRenamesKeyAsOfPutJsonFile(String oldKey, String newKey) {
+        JsonUtils.setJsonRenameKey(json,oldKey,newKey);
     }
 }
