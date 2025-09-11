@@ -1,7 +1,7 @@
 Feature: Users
 
   Background: : Admin login
-    Given user sends POST request to login with email "azizetest@gmail.com" and password "123456"
+    Given user sends POST request to login with email "adminuser@gmail.com" and password "password"
     When  user gets token as role "adminToken"
 
   @getAllUsers @CRUDUsers
