@@ -3,6 +3,7 @@ package stepdefinitions;
 import io.cucumber.java.en.*;
 import io.restassured.path.json.JsonPath;
 import org.testng.Assert;
+import utilities.Authentication;
 import utilities.ConfigReader;
 import java.util.List;
 import static base_urls.BazaarStoresBaseUrl.spec;
@@ -19,7 +20,9 @@ public class FavoritesSD {
 
     @Given("The user sends a request with the GET method")
     public void the_user_sends_a_request_with_the_get_method() {
+        System.out.println("response.header(\"authorisation\") = " + response.header("authorisation"));
         response = given(spec).when().get("/api/favorites");
+
     }
 
     @Given("The user saves the IDs received from AllProducts")

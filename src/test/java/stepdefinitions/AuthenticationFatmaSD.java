@@ -13,7 +13,7 @@ import static base_urls.BazaarStoresBaseUrl.spec;
 import static io.restassured.RestAssured.given;
 import static utilities.Authentication.getToken;
 
-public class AuthenticationSD {
+public class AuthenticationFatmaSD {
 
     public static JsonNode json;
     public static Response response;
@@ -37,14 +37,9 @@ public class AuthenticationSD {
                     .body(json)
                     .post("/api/register");
 
-        response.prettyPrint();
-
         JsonPath jsonPath = response.jsonPath();
         ConfigReader.setProperty( "registeredEmail", jsonPath.get("user.email") );  //değer confite saklanır
         ConfigReader.setProperty( "registerId", jsonPath.get("user.id")+"");
-
-        System.out.println(ConfigReader.getProperty("registeredEmail"));
-        System.out.println("Register ID = "+ConfigReader.getProperty("registerId"));
 
     }
 
@@ -55,9 +50,6 @@ public class AuthenticationSD {
         response = given(spec)
                 .body(json)
                 .post("/api/register");
-
-        response.prettyPrint();
-
     }
 
     @Given("user logs in successfully")
@@ -66,7 +58,6 @@ public class AuthenticationSD {
         JsonUtils.setJson(json,"email",ConfigReader.getProperty("registeredEmail"));
 
         response = given(spec).body(json).post("/api/login");
-        response.prettyPrint();
 
     }
     @When("user logs in with invalid credentials")
@@ -77,31 +68,27 @@ public class AuthenticationSD {
         JsonUtils.setJson(json,"password","wrongpassword");
 
         response = given(spec).body(json).post("/api/login");
-        response.prettyPrint();
     }
 
     @When("user logs in incorrectly")
     public void userLogsInIncorrectly() {
-        json = JsonUtils.readJson("authentication\\credentials");
-        JsonUtils.setJson(json,"email",ConfigReader.getProperty("registeredEmail"));
-        JsonUtils.setJson(json,"password","wrongpassword");
+        json = JsonUtils.readJson("authentication\\error");
+        JsonUtils.setJson(json,"email","");
+        JsonUtils.setJson(json,"password","");
 
         response = given(spec).body(json).post("/api/login");
-        response.prettyPrint();
     }
 
     @Given("user logs out")
     public void userLogsOut() {
-
         response = given(spec).post("/api/logout/");
-        response.prettyPrint();
-    }
 
+    }
 
     @Given("user sends GET request to get current authenticated user")
     public void userSendsGETRequestToGetCurrentAuthenticatedUser() {
         response = given(spec).get("/api/me");
-        response.prettyPrint();
+
     }
 
 

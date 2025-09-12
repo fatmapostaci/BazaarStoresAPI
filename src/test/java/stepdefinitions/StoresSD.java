@@ -21,20 +21,16 @@ public class StoresSD {
 
     public static JsonNode json;
 
-
     @And("user sends POST request to create a store")
     public void userSendsPOSTRequestToCreateAStore() {
-
         json = JsonUtils.readJson("stores\\storesPostBody");
         response = given(spec).body(json).post("/api/stores/create");
-        response.prettyPrint();
 
     }
     @And("user keeps created id")
     public void userKeepsCreatedId() {
         ConfigReader.setProperty( "validStoreId", response.jsonPath().getString("product.id") );
         System.out.println("userKeepsCreatedId=" + ConfigReader.getProperty("validStoreId"));
-
     }
 
     @Then("user verifies status code {int}")
@@ -45,20 +41,35 @@ public class StoresSD {
     @When("user sends GET request to get all stores and keep ids")
     public void userSendsGETRequestToGetAllStoresAndKeepIds() {
         response = given(spec).get("/api/stores/");
-       // response.jsonPath().getList("id");
     }
 
     @Given("user sends get request with store id as {string}")
     public void userSendsGetRequestWithStoreIdAs(String id) {
-
-        System.out.println("userSendsGetRequestWithStoreIdAs = " + ConfigReader.getProperty(id));
-
         response = given(spec).get("/api/stores/" + ConfigReader.getProperty(id));
-        response.prettyPrint();
     }
 
+    @Given("user sends put request with store id as {string}")
+    public void userSendsPutRequestWithStoreIdAs(String id) {
+        json = JsonUtils.readJson("stores\\storesPUTBody");
+        response = given(spec).body(json).put("/api/stores/"+ConfigReader.getProperty(id));
+    }
+    
+    @Given("user deletes {string} key from body and sends put request with store id as {string}")
+    public void userDeletesKeyFromBodyAndSendsPutRequestWithStoreIdAs(String key, String id) {
+        json = JsonUtils.readJson("stores\\storesPUTBody");
+        JsonUtils.setJsonDeleteKey(json, "admin_d");
+        response = given(spec).body(json).put("/api/stores/"+ConfigReader.getProperty(id));
+    }
 
+    @And("user renames {string} key as {string} of body and sends put request with store id as {string}")
+    public void userRenamesKeyAsOfBodyAndSendsPutRequestWithStoreIdAs(String key, String value, String id) {
+        json = JsonUtils.readJson("stores\\storesPUTBody");
+        JsonUtils.setJson(json, key,value);
+        response = given(spec).body(json).put("/api/stores/"+ConfigReader.getProperty(id));
+    }
 
-
-
+    @Given("user sends delete request with store id as {string}")
+    public void userSendsDeleteRequestWithStoreIdAs(String id) {
+        response = given(spec).body(json).delete("/api/stores/"+ConfigReader.getProperty(id));
+    }
 }
