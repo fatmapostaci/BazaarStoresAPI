@@ -50,33 +50,26 @@ public class StoresSD {
 
     @Given("user sends put request with store id as {string}")
     public void userSendsPutRequestWithStoreIdAs(String id) {
-
         json = JsonUtils.readJson("stores\\storesPUTBody");
+        response = given(spec).body(json).put("/api/stores/"+ConfigReader.getProperty(id));
+    }
+    
+    @Given("user deletes {string} key from body and sends put request with store id as {string}")
+    public void userDeletesKeyFromBodyAndSendsPutRequestWithStoreIdAs(String key, String id) {
+        json = JsonUtils.readJson("stores\\storesPUTBody");
+        JsonUtils.setJsonDeleteKey(json, "admin_d");
+        response = given(spec).body(json).put("/api/stores/"+ConfigReader.getProperty(id));
+    }
+
+    @And("user renames {string} key as {string} of body and sends put request with store id as {string}")
+    public void userRenamesKeyAsOfBodyAndSendsPutRequestWithStoreIdAs(String key, String value, String id) {
+        json = JsonUtils.readJson("stores\\storesPUTBody");
+        JsonUtils.setJson(json, key,value);
         response = given(spec).body(json).put("/api/stores/"+ConfigReader.getProperty(id));
     }
 
     @Given("user sends delete request with store id as {string}")
     public void userSendsDeleteRequestWithStoreIdAs(String id) {
         response = given(spec).body(json).delete("/api/stores/"+ConfigReader.getProperty(id));
-    }
-
-    @Given("user deletes {string} key from put json file")
-    public void userDeletesAKeyFromPutJsonFile(String key) {
-
-        System.out.println("json.toString() setJsonDeleteKey= " + json.toString());
-        JsonUtils.setJsonDeleteKey(json, key);
-        System.out.println("json.toString() setJsonDeleteKey = " + json.toString());
-    }
-
-    @Given("user updates {string} key with value as {string} of put json file")
-    public void userUpdatesKeyWithValueAsOfPutJsonFile(String key,String value) {
-        JsonUtils.setJson(json,key,value);
-        System.out.println("json.toString() = " + json.toString());
-    }
-
-    @And("user renames {string} key as {string} of put json file")
-    public void userRenamesKeyAsOfPutJsonFile(String oldKey, String newKey) {
-        JsonUtils.setJsonRenameKey(json,oldKey,newKey);
-        System.out.println("json.toString() = " + json.toString());
     }
 }
