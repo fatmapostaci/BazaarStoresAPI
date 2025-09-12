@@ -59,7 +59,6 @@ Feature: Favorites
     Then The user verifies that the status code is not 200
     Then The user verifies that the "error" information in the response body is "Favorite not found."
 
-
   @PostFavWithSameProducts @CRUDFav
   Scenario: Adding a product to favorites that is already in favorites NEGATIVE
     Given With the POST method, the user sends one of the saved IDs as a request
