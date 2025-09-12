@@ -9,6 +9,8 @@ import io.restassured.response.Response;
 import utilities.JsonUtils;
 
 import java.io.IOException;
+import java.sql.Driver;
+import java.sql.DriverAction;
 import java.util.List;
 
 import static base_urls.BazaarStoresBaseUrl.spec;
@@ -27,7 +29,6 @@ public class ProductsSD {
     public void user_sends_get_request_to_get_products_info() {
 
         response=given(spec).get("/api/products");
-        response.prettyPrint();
 
         int size=response.jsonPath().getList("Products").size();
         System.out.println("size = " + size);
@@ -50,10 +51,11 @@ public class ProductsSD {
 
     }
     @When("user sends post request to new create product")
-    public void user_sends_post_request_to_new_create_product() {
+    public void user_sends_post_request_to_new_create_product() throws InterruptedException {
 
         response= given(spec).body(json).post("/api/products/create");
-        response.prettyPrint();
+
+
     }
 
     @Then("user validates new created product body")
@@ -62,7 +64,7 @@ public class ProductsSD {
                 ("product.name",equalTo(json.get("name").asText()),
                         "product.stock",equalTo(100)
                         ,"product.sku",equalTo(json.get("sku").asText()));
-        response.prettyPrint();
+
 
            //     spec.header("Authorization", "Created_Id " + response.jsonPath().getString("id"));
         createdId = response.jsonPath().getString("product.id");
@@ -101,7 +103,7 @@ public void user_sets_the_payload_for_new_product_body_update() throws IOExcepti
     public void user_sends_put_request_to_new_create_product() {
         System.out.println(createdId);
         response=given(spec).body(json).put("/api/products/" + createdId);
-        response.prettyPrint();
+
     }
 
     @Then("user validates new created product body update")
