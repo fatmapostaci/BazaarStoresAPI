@@ -1,0 +1,15 @@
+{
+  "success": "Product updated successfully!",
+  "product": {
+    "id": 1,
+    "name": "Product Name",
+    "price": 9.99,
+    "stock": 100,
+    "sku": "SKU12345",
+    "category_id": 1,
+    "manufacturer": "Manufacturer Name",
+    "image_url": "images/image123.jpg",
+    "discount": 0.5,
+    "description": "Product description"
+  }
+}
